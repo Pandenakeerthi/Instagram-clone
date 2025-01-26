@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Follow</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f0f0;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Side Menu Styling */
+        .side-menu {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            width: 500px;
+            max-width: 100%;
+            /* Responsive width */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* User Profile Section */
+        .side-menu__user-profile {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            /* Allow wrapping for smaller screens */
+            gap: 10px;
+        }
+
+        .side-menu__user-avatar img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 2px solid #ddd;
+        }
+
+        .side-menu__user-info {
+            flex: 1;
+            /* Allow user info to take remaining space */
+            min-width: 150px;
+        }
+
+        .side-menu__user-info a {
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+            display: block;
+        }
+
+        .side-menu__user-info a:hover {
+            color: #0077ff;
+        }
+
+        .side-menu__user-info span {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .side-menu__user-button {
+            background-color: #0077ff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+            flex-shrink: 0;
+            /* Prevent button from shrinking */
+        }
+
+        .side-menu__user-button:hover {
+            background-color: #005bb5;
+        }
+
+        /* Suggestions Section */
+        .side-menu__suggestions-section {
+            margin-top: 20px;
+        }
+
+        .side-menu__suggestions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .side-menu__suggestions-header h2 {
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .side-menu__suggestions-header button {
+            background: none;
+            border: none;
+            color: #0077ff;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .side-menu__suggestions-header button:hover {
+            text-decoration: underline;
+        }
+
+        /* Suggestions Content */
+        .side-menu__suggestions-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .side-menu__suggestion {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            /* Wrap content for smaller screens */
+            gap: 10px;
+        }
+
+        .side-menu__suggestion-avatar img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+            border: 2px solid #ddd;
+        }
+
+        .side-menu__suggestion-info {
+            flex: 1;
+            /* Take available space */
+            min-width: 150px;
+            /* Ensure proper display on small screens */
+        }
+
+        .side-menu__suggestion-info a {
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+            display: block;
+        }
+
+        .side-menu__suggestion-info a:hover {
+            color: #0077ff;
+        }
+
+        .side-menu__suggestion-info span {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .side-menu__suggestion-button {
+            background-color: #0077ff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background-color 0.3s;
+            flex-shrink: 0;
+            /* Prevent button from shrinking */
+        }
+
+        .side-menu__suggestion-button:hover {
+            background-color: #005bb5;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .side-menu {
+                padding: 15px;
+                width: 90%;
+                /* Use a smaller width for tablets */
+            }
+
+            .side-menu__user-avatar img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .side-menu__user-info span {
+                font-size: 0.8rem;
+            }
+
+            .side-menu__suggestion-avatar img {
+                width: 35px;
+                height: 35px;
+            }
+
+            .side-menu__suggestion-info span {
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .side-menu {
+                width: 100%;
+                /* Full width on smaller screens */
+                padding: 10px;
+            }
+
+            .side-menu__user-avatar img {
+                width: 35px;
+                height: 35px;
+            }
+
+            .side-menu__user-info a {
+                font-size: 0.9rem;
+            }
+
+            .side-menu__suggestion-avatar img {
+                width: 30px;
+                height: 30px;
+            }
+
+            .side-menu__suggestion-info span {
+                font-size: 0.7rem;
+            }
+
+            .side-menu__user-button,
+            .side-menu__suggestion-button {
+                font-size: 0.7rem;
+                padding: 5px 8px;
+            }
+           
+           
+        }
+        #icon{
+            font-size: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="side-menu" id="FOLLOWS">
+        <!-- Go Back Button -->
+        <div class="go-back-button" onclick="redirectToPage()">
+            <i class="fa-solid fa-arrow-left-long" id="icon"></i>
+            
+        </div>
+        <br>
+
+        <div class="side-menu__user-profile">
+            <a href="#" target="_blank" class="side-menu__user-avatar">
+                <img src="assets/3052.png_860.png" alt="User Picture" />
+            </a>
+            <div class="side-menu__user-info">
+                <a href="#" target="_blank">keera1</a>
+                <span>Leonardo Costa</span>
+            </div>
+            <button class="side-menu__user-button">Following</button>
+        </div>
+
+        <div class="side-menu__suggestions-section">
+            <div class="side-menu__suggestions-header">
+                <h2>Suggestions for You</h2>
+                <button>See All</button>
+            </div>
+            <div class="side-menu__suggestions-content">
+                <div class="side-menu__suggestion">
+                    <a href="#" class="side-menu__suggestion-avatar">
+                        <img src="assets/GIRL2.jpg" alt="User Picture" />
+                    </a>
+                    <div class="side-menu__suggestion-info">
+                        <a href="#">mythra</a>
+                        <span>Followed by user1, user2 and 9 others</span>
+                    </div>
+                    <button class="side-menu__suggestion-button">Follow</button>
+                </div>
+                <div class="side-menu__suggestion">
+                    <a href="#" class="side-menu__suggestion-avatar">
+                        <img src="assets/44.png" alt="User Picture" />
+                    </a>
+                    <div class="side-menu__suggestion-info">
+                        <a href="#">syrup17</a>
+                        <span>Followed by user1, user2 and 3 others</span>
+                    </div>
+                    <button class="side-menu__suggestion-button">Follow</button>
+                </div>
+                <div class="side-menu__suggestion">
+                    <a href="#" class="side-menu__suggestion-avatar">
+                        <img src="assets/44.png" alt="User Picture" />
+                    </a>
+                    <div class="side-menu__suggestion-info">
+                        <a href="#">vaguu18</a>
+                        <span>Followed by user1 and 9 others</span>
+                    </div>
+                    <button class="side-menu__suggestion-button">Follow</button>
+                </div>
+                <div class="side-menu__suggestion">
+                    <a href="#" class="side-menu__suggestion-avatar">
+                        <img src="assets/22.png" alt="User Picture" />
+                    </a>
+                    <div class="side-menu__suggestion-info">
+                        <a href="#">teesra19</a>
+                        <span>Followed by user1 and 3 others</span>
+                    </div>
+                    <button class="side-menu__suggestion-button">Follow</button>
+                </div>
+                <div class="side-menu__suggestion">
+                    <a href="#" class="side-menu__suggestion-avatar">
+                        <img src="assets/GIRL.jpg" alt="User Picture" />
+                    </a>
+                    <div class="side-menu__suggestion-info">
+                        <a href="#">ushaa34</a>
+                        <span>Followed by user1 and 6 others</span>
+                    </div>
+                    <button class="side-menu__suggestion-button">Follow</button>
+                </div>
+                <div class="side-menu__suggestion">
+                    <a href="#" class="side-menu__suggestion-avatar">
+                        <img src="assets/44.png" alt="User Picture" />
+                    </a>
+                    <div class="side-menu__suggestion-info">
+                        <a href="#">vaguu18</a>
+                        <span>Followed by user1 and 9 others</span>
+                    </div>
+                    <button class="side-menu__suggestion-button">Follow</button>
+                </div>
+                <div class="side-menu__suggestion">
+                    <a href="#" class="side-menu__suggestion-avatar">
+                        <img src="assets/22.png" alt="User Picture" />
+                    </a>
+                    <div class="side-menu__suggestion-info">
+                        <a href="#">teesra19</a>
+                        <span>Followed by user1 and 3 others</span>
+                    </div>
+                    <button class="side-menu__suggestion-button">Follow</button>
+                </div>
+                <div class="side-menu__suggestion">
+                    <a href="#" class="side-menu__suggestion-avatar">
+                        <img src="assets/GIRL.jpg" alt="User Picture" />
+                    </a>
+                    <div class="side-menu__suggestion-info">
+                        <a href="#">ushaa34</a>
+                        <span>Followed by user1 and 6 others</span>
+                    </div>
+                    <button class="side-menu__suggestion-button">Follow</button>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+    <script>
+        // JavaScript to handle "Go Back" button redirect
+        function redirectToPage() {
+            window.location.href = "index.html"; // Replace with your desired page URL
+        }
+    </script>
+</body>
+
+</html>
